@@ -29,15 +29,19 @@ export default function BookPage() {
 
       <section className="container-x grid gap-10 lg:grid-cols-12 lg:gap-14">
         <aside className="lg:col-span-4">
-          <h2 className="text-lg font-semibold tracking-[-0.02em]">On the call</h2>
-          <ul className="mt-4 space-y-3">
-            {agenda.map((a) => (
-              <li key={a} className="flex gap-3">
-                <Check size={18} className="mt-1 shrink-0 text-muted" />
-                <span>{a}</span>
-              </li>
-            ))}
-          </ul>
+          <div data-reveal className="on-bright noise relative isolate overflow-hidden rounded-[1.75rem] border-[1.5px] border-night bg-pop p-6 shadow-[8px_10px_0_0_#12072e] sm:p-8">
+            <h2 className="display text-[2.2rem] leading-none">On the call</h2>
+            <ul className="mt-6 space-y-4 font-medium">
+              {agenda.map((a) => (
+                <li key={a} className="flex gap-3">
+                  <span className="mt-0.5 grid size-6 shrink-0 place-items-center rounded-full bg-night text-pop">
+                    <Check size={13} strokeWidth={3} />
+                  </span>
+                  <span>{a}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
           <p className="mt-8 text-muted">
             Can’t find a time that works?{" "}
             <Link href="/contact" className="link">
@@ -46,7 +50,7 @@ export default function BookPage() {
             and we’ll work around you.
           </p>
         </aside>
-        <div className="lg:col-span-8">
+        <div data-reveal className="lg:col-span-8">
           <CalEmbed location="book_page" />
         </div>
       </section>

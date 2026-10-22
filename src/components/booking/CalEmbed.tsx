@@ -25,7 +25,7 @@ const CalInline = dynamic(() => import("./CalInline"), { ssr: false, loading: Ca
 export function CalEmbed({ prefill, location }: { prefill?: CalPrefill; location: string }) {
   if (!calLink) {
     return (
-      <div className="rounded-[1.5rem] border border-dashed border-line-strong p-8 text-center sm:p-12">
+      <div className="noise relative isolate overflow-hidden rounded-[2rem] border-[1.5px] border-dashed border-line-strong p-8 text-center sm:p-14">
         <h3 className="text-xl font-semibold tracking-[-0.02em]">Online booking isn’t switched on yet</h3>
         <p className="mx-auto mt-3 max-w-md text-muted">
           Send us a short brief and we’ll reply with times that suit you
@@ -47,7 +47,7 @@ export function CalEmbed({ prefill, location }: { prefill?: CalPrefill; location
   }
 
   return (
-    <div className="overflow-hidden rounded-[1.5rem] border border-line bg-surface">
+    <div className="overflow-hidden rounded-[2rem] border border-line bg-surface">
       <CalInline prefill={prefill} location={location} />
     </div>
   );

@@ -18,41 +18,49 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="mt-24 overflow-hidden border-t border-line pb-28 pt-16 lg:mt-32 lg:pb-8">
+    <footer className="theme-uv noise relative isolate mt-28 overflow-hidden rounded-t-[2.5rem] pb-28 pt-16 sm:pt-20 lg:mt-40 lg:pb-8">
+      <div aria-hidden="true" className="aurora">
+        <i />
+        <i />
+        <i />
+      </div>
       <div className="container-x">
+        <div className="mb-14 flex flex-col gap-8 border-b border-line pb-14 md:flex-row md:items-end md:justify-between">
+          <p className="display h2 max-w-3xl text-balance">
+            Got something <span className="heat-text">worth sending?</span>
+          </p>
+          <BookCallLink location="footer" className="btn btn-primary shrink-0 self-start text-base md:self-auto" />
+        </div>
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <Logo />
             <p className="mt-5 max-w-sm text-muted">{site.description}</p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <BookCallLink location="footer" />
-            </div>
           </div>
 
           <div className="grid gap-10 sm:grid-cols-3 lg:col-span-7">
             <div>
-              <h2 className="text-sm font-medium text-ink">Studio</h2>
+              <h2 className="text-sm font-bold text-pop">Studio</h2>
               <ul className="mt-3 space-y-1">
                 {nav.map((item) => (
                   <li key={item.href}>
-                    <Link href={item.href} className="inline-flex min-h-8 items-center text-muted no-underline hover:text-ink">
+                    <Link href={item.href} className="u-draw inline-flex min-h-8 items-center text-muted no-underline transition-colors hover:text-ink">
                       {item.label}
                     </Link>
                   </li>
                 ))}
                 <li>
-                  <Link href="/book" className="inline-flex min-h-8 items-center text-muted no-underline hover:text-ink">
+                  <Link href="/book" className="u-draw inline-flex min-h-8 items-center text-muted no-underline transition-colors hover:text-ink">
                     Book a call
                   </Link>
                 </li>
               </ul>
             </div>
             <div>
-              <h2 className="text-sm font-medium text-ink">Services</h2>
+              <h2 className="text-sm font-bold text-pop">Services</h2>
               <ul className="mt-3 space-y-1">
                 {services.map((s) => (
                   <li key={s.slug}>
-                    <Link href={`/services/${s.slug}`} className="inline-flex min-h-8 items-center text-muted no-underline hover:text-ink">
+                    <Link href={`/services/${s.slug}`} className="u-draw inline-flex min-h-8 items-center text-muted no-underline transition-colors hover:text-ink">
                       {s.name}
                     </Link>
                   </li>
@@ -60,7 +68,7 @@ export function Footer() {
               </ul>
             </div>
             <div>
-              <h2 className="text-sm font-medium text-ink">Contact</h2>
+              <h2 className="text-sm font-bold text-pop">Contact</h2>
               <ul className="mt-3 space-y-1 text-muted">
                 {site.email && (
                   <li>
@@ -123,9 +131,13 @@ export function Footer() {
         </div>
         <p
           aria-hidden="true"
-          className="pointer-events-none mt-10 select-none whitespace-nowrap bg-gradient-to-b from-ink/25 to-transparent bg-clip-text text-center text-[clamp(3.5rem,16.5vw,15rem)] font-semibold leading-[0.85] tracking-[-0.06em] text-transparent"
+          className="display mt-10 select-none whitespace-nowrap text-center text-[clamp(3.4rem,17.5vw,17rem)] leading-[0.8] tracking-[-0.05em]"
         >
-          sendworthy
+          {"sendworthy".split("").map((ch, i) => (
+            <span key={i} className="jump-letter">
+              {ch}
+            </span>
+          ))}
         </p>
       </div>
     </footer>

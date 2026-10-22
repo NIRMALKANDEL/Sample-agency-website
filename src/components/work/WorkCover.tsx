@@ -2,12 +2,12 @@ import type { CoverPalette } from "@/content/work";
 
 type Colors = { bg: string; fg: string; accent: string; shape: string; soft: string };
 
-// Three colours only: violet-black family, lavender and chartreuse. (The palette keys come from the content file.)
+// Brand palette: ultraviolet, tomato, chartreuse and lavender. (The palette keys come from the content file.)
 const palettes: Record<CoverPalette, Colors> = {
-  tomato: { bg: "#1b1540", fg: "#f3f0ff", accent: "#d4ff3a", shape: "#b9a6ff", soft: "#2b2260" },
-  chartreuse: { bg: "#d4ff3a", fg: "#0e0b1a", accent: "#0e0b1a", shape: "#b9a6ff", soft: "#c3ee2b" },
-  lavender: { bg: "#b9a6ff", fg: "#0e0b1a", accent: "#d4ff3a", shape: "#f3f0ff", soft: "#a893f5" },
-  ink: { bg: "#0e0b1a", fg: "#f3f0ff", accent: "#d4ff3a", shape: "#b9a6ff", soft: "#211a45" },
+  tomato: { bg: "#ff4f2b", fg: "#12072e", accent: "#d8ff3c", shape: "#12072e", soft: "#ff7a5c" },
+  chartreuse: { bg: "#d8ff3c", fg: "#12072e", accent: "#ff4f2b", shape: "#b8a2ff", soft: "#c5ee25" },
+  lavender: { bg: "#b8a2ff", fg: "#12072e", accent: "#ff4f2b", shape: "#d8ff3c", soft: "#a48bff" },
+  ink: { bg: "#1c0f45", fg: "#f5f0ff", accent: "#ff4f2b", shape: "#b8a2ff", soft: "#2c1a66" },
 };
 
 /**
@@ -83,10 +83,11 @@ export function WorkCover({
         y="132"
         fill={p.fg}
         style={{
-          fontFamily: "var(--font-geist), sans-serif",
-          fontWeight: 600,
-          fontSize: 76,
-          letterSpacing: "-3.5px",
+          fontFamily: "var(--font-bricolage), sans-serif",
+          fontWeight: 800,
+          fontVariationSettings: '"wdth" 80, "opsz" 96',
+          fontSize: 92,
+          letterSpacing: "-3px",
         }}
       >
         {word}

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Instrument_Serif } from "next/font/google";
+import { Bricolage_Grotesque, Geist } from "next/font/google";
 import "./globals.css";
 import { site } from "@/lib/site";
 import { organizationJsonLd, websiteJsonLd } from "@/lib/seo";
@@ -10,6 +10,8 @@ import { ConsentBanner } from "@/components/ConsentBanner";
 import { MobileCtaBar } from "@/components/MobileCtaBar";
 import { AnalyticsScripts, ConsentDefaults, GtmNoScript } from "@/components/Analytics";
 import { JsonLd } from "@/components/JsonLd";
+import { Cursor } from "@/components/ui/Cursor";
+import { RevealObserver } from "@/components/ui/RevealObserver";
 
 const geist = Geist({
   subsets: ["latin"],
@@ -17,14 +19,12 @@ const geist = Geist({
   display: "swap",
 });
 
-// Used for one or two expressive moments only, so it is not preloaded.
-const instrument = Instrument_Serif({
+// Display face: a variable grotesque with width and optical-size axes, used condensed and heavy.
+const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
-  weight: "400",
-  style: "italic",
-  variable: "--font-instrument",
+  variable: "--font-bricolage",
   display: "swap",
-  preload: false,
+  axes: ["opsz", "wdth"],
 });
 
 const defaultTitle = `${site.name}: growth & creative studio for social-first brands`;
@@ -55,15 +55,17 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f7f5fd" },
-    { media: "(prefers-color-scheme: dark)", color: "#0e0b1a" },
+    { media: "(prefers-color-scheme: light)", color: "#f3eeff" },
+    { media: "(prefers-color-scheme: dark)", color: "#12072e" },
   ],
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${geist.variable} ${instrument.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${geist.variable} ${bricolage.variable}`}>
       <head>
+        {/* Marks that JavaScript runs, so scroll-reveal styles only apply when they can be undone. */}
+        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
         <ConsentDefaults />
       </head>
       <body>
@@ -76,6 +78,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <Footer />
           <MobileCtaBar />
           <ConsentBanner />
+          <Cursor />
+          <RevealObserver />
         </Providers>
         <JsonLd data={[organizationJsonLd(), websiteJsonLd()]} />
         <AnalyticsScripts />

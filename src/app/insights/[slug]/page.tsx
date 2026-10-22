@@ -54,7 +54,7 @@ export default async function InsightPage({ params }: Props) {
       </PageHero>
 
       <article className="container-x">
-        <div className="prose" dangerouslySetInnerHTML={{ __html: post.html }} />
+        <div data-reveal className="prose" dangerouslySetInnerHTML={{ __html: post.html }} />
         {post.tags.length > 0 && (
           <ul className="mt-12 flex flex-wrap gap-2" aria-label="Topics">
             {post.tags.map((t) => (
@@ -68,14 +68,14 @@ export default async function InsightPage({ params }: Props) {
 
       {more.length > 0 && (
         <nav aria-labelledby="more-title" className="container-x mt-20 lg:mt-24">
-          <h2 id="more-title" className="display h3">
+          <h2 id="more-title" className="display h2" data-reveal>
             Keep reading
           </h2>
-          <ul className="mt-6 divide-y divide-line border-y border-line">
+          <ul className="mt-8 divide-y divide-line-strong border-y border-line-strong">
             {more.map((p) => (
               <li key={p.slug}>
-                <Link href={`/insights/${p.slug}`} className="group block py-6 no-underline">
-                  <span className="block text-xl font-semibold tracking-[-0.02em] text-ink group-hover:underline">{p.title}</span>
+                <Link href={`/insights/${p.slug}`} className="svc-row group block px-2 py-7 no-underline sm:px-4">
+                  <span className="display block text-[clamp(1.6rem,3.4vw,2.6rem)] leading-[0.95] text-ink transition-transform duration-500 group-hover:translate-x-3">{p.title}</span>
                   <span className="mt-1 block text-muted">{p.description}</span>
                 </Link>
               </li>

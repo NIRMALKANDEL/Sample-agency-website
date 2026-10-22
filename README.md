@@ -12,9 +12,9 @@ This is a production-ready website for a growth and creative studio. It is built
 | Next.js 16 (App Router, static generation) | SEO-friendly server-rendered HTML, per-page metadata, sitemap and robots from code, image/font optimisation, API route for the form |
 | TypeScript | Safer edits to content and config |
 | Tailwind CSS v4 | Small CSS output, design tokens as CSS variables (light/dark) |
-| Framer Motion (`LazyMotion`) | Page transitions, menu and form state changes; loads only the features used |
-| three.js + React Three Fiber + drei | The hero's iridescent 3D knot. Lazy-loaded in the browser only (`next/dynamic`, `ssr: false`), lit with in-code Lightformers (no downloaded HDRs), pauses off-screen, static under reduced motion, lower detail on phones |
-| Geist + Instrument Serif (`next/font`) | One clean sans for everything, plus a single serif italic moment. Self-hosted, no layout shift |
+| Framer Motion (`LazyMotion`) | Page curtain transitions, scroll-linked effects (horizontal work rail, word-by-word statement, process line), springy tabs, nav and previews |
+| three.js + React Three Fiber + drei | The hero's floating 3D "reactions" (heart, paper plane, play button…). Lazy-loaded in the browser only (`next/dynamic`, `ssr: false`), lit with in-code Lightformers (no downloaded HDRs), pauses off-screen, static under reduced motion, lower detail on phones |
+| Bricolage Grotesque + Geist (`next/font`) | A heavy, condensed variable display face for headlines and a clean sans for body. Self-hosted, no layout shift |
 | next-themes | Light/dark/system theme without flash, remembered per visitor |
 | Cal.com embed | Real booking with timezones, confirmations, reminders and calendar sync |
 | Resend or webhook | Real enquiry delivery by email or to Slack/Zapier/CRM |
@@ -23,7 +23,7 @@ This is a production-ready website for a growth and creative studio. It is built
 
 ## Pages
 
-- `/`: 3D hero, services bento, work, "What platforms reward right now" (sourced), process, engagement models, FAQ, quick enquiry
+- `/`: 3D hero, crossed marquee tapes, interactive services list, scroll-lit manifesto and process, horizontal work rail, "What platforms reward right now" (sourced), process, engagement models, FAQ, quick enquiry
 - `/services` and `/services/[slug]`: 8 service pages with Service + FAQ structured data
 - `/work` and `/work/[slug]`: case studies (currently **concept projects**, clearly labelled)
 - `/about`: story, values, disciplines; team section appears when you add real people

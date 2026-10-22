@@ -7,6 +7,7 @@ import { Spotlight } from "@/components/ui/Spotlight";
 import { BookCallLink } from "@/components/Tracked";
 import { site } from "@/lib/site";
 import { pageMetadata } from "@/lib/seo";
+import { cssVars } from "@/lib/css";
 
 export const metadata: Metadata = pageMetadata({
   title: "About the studio",
@@ -34,6 +35,11 @@ const values = [
   },
 ];
 
+const valueTones = ["bg-accent", "bg-pop", "bg-lavender", "bg-pop"];
+
+const stickerTones = ["bg-accent", "bg-pop", "bg-lavender", "bg-white"];
+const stickerTilts = ["-rotate-3", "rotate-2", "-rotate-1", "rotate-3", "rotate-1", "-rotate-2"];
+
 const disciplines = [
   "Growth strategists",
   "Short-form video editors",
@@ -55,7 +61,7 @@ export default function AboutPage() {
       />
 
       <section className="container-x grid gap-10 lg:grid-cols-12 lg:gap-14">
-        <div className="space-y-5 text-[1.0625rem] lg:col-span-7 lg:text-lg">
+        <div className="space-y-5 text-[1.0625rem] lg:col-span-7 lg:text-xl" data-reveal>
           <p>
             Sendworthy puts strategy, content production, paid social and web under one roof, so the Reel, the ad it becomes
             and the page it lands on are all built for the same goal.
@@ -66,13 +72,12 @@ export default function AboutPage() {
           </p>
           <p className="text-muted">{site.location}.</p>
         </div>
-        <aside className="lg:col-span-5">
-          <div className="rounded-[1.25rem] border border-line bg-surface p-6 sm:p-7">
-            <h2 className="text-lg font-semibold tracking-[-0.02em]">The team covers</h2>
-            <ul className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-1">
-              {disciplines.map((d) => (
-                <li key={d} className="flex items-center gap-2.5">
-                  <span className="size-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true" />
+        <aside className="lg:col-span-5" data-reveal>
+          <div className="noise relative isolate overflow-hidden rounded-[1.75rem] border border-line bg-surface p-6 sm:p-8">
+            <h2 className="display text-[2rem] leading-none">The team covers</h2>
+            <ul className="mt-6 flex flex-wrap gap-2.5">
+              {disciplines.map((d, i) => (
+                <li key={d} className={`sticker ${stickerTones[i % stickerTones.length]} ${stickerTilts[i % stickerTilts.length]}`}>
                   {d}
                 </li>
               ))}
@@ -81,14 +86,22 @@ export default function AboutPage() {
         </aside>
       </section>
 
-      <section aria-labelledby="values-title" className="container-x mt-24 lg:mt-32">
+      <section aria-labelledby="values-title" className="container-x mt-28 lg:mt-40">
         <SectionHeading id="values-title" title="What we believe." />
-        <ul className="mt-10 grid gap-3 sm:grid-cols-2">
-          {values.map((v) => (
-            <li key={v.title}>
-              <Spotlight className="h-full p-6 sm:p-8">
-                <h3 className="display text-[1.6rem] leading-[1.05] tracking-[-0.045em]">{v.title}</h3>
-                <p className="mt-3 max-w-lg text-muted">{v.body}</p>
+        <ul className="mt-12 grid gap-4 sm:grid-cols-2">
+          {values.map((v, i) => (
+            <li key={v.title} data-reveal style={cssVars({ "--d": `${(i % 2) * 90}ms` })} className={i % 2 === 1 ? "sm:translate-y-12" : ""}>
+              <Spotlight tilt className="group h-full rounded-[1.75rem] p-7 sm:p-9">
+                <span
+                  aria-hidden="true"
+                  className={`grid size-14 place-items-center rounded-2xl border-[1.5px] border-night text-night shadow-[0_5px_0_-1px_#12072e] transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:-rotate-12 group-hover:scale-110 ${valueTones[i % valueTones.length]}`}
+                >
+                  <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 0c.6 6.4 5.6 11.4 12 12-6.4.6-11.4 5.6-12 12-.6-6.4-5.6-11.4-12-12C6.4 11.4 11.4 6.4 12 0Z" fill="currentColor" />
+                  </svg>
+                </span>
+                <h3 className="display mt-8 text-[2.2rem] leading-[0.95] sm:text-[2.6rem]">{v.title}</h3>
+                <p className="mt-4 max-w-lg text-muted">{v.body}</p>
               </Spotlight>
             </li>
           ))}
@@ -125,15 +138,24 @@ export default function AboutPage() {
         </section>
       )}
 
-      <section aria-labelledby="process-title" className="container-x mt-24 lg:mt-32">
-        <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-          <SectionHeading id="process-title" title="How we work." />
-          <BookCallLink location="about_process" className="btn btn-primary shrink-0 self-start md:self-auto">
-            Book a discovery call
-          </BookCallLink>
+      <section aria-labelledby="process-title" className="theme-uv noise relative isolate mt-28 overflow-hidden py-24 lg:mt-40 lg:py-32">
+        <div aria-hidden="true" className="aurora">
+          <i />
+          <i />
+          <i />
         </div>
-        <div className="mt-10">
-          <Process />
+        <div className="container-x grid gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-5">
+            <div className="lg:sticky lg:top-32">
+              <SectionHeading id="process-title" title="How we work." />
+              <BookCallLink location="about_process" className="btn btn-primary mt-8">
+                Book a discovery call
+              </BookCallLink>
+            </div>
+          </div>
+          <div className="lg:col-span-7">
+            <Process />
+          </div>
         </div>
       </section>
 

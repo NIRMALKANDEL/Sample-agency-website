@@ -7,8 +7,7 @@ import { CtaBand } from "@/components/CtaBand";
 import { BookCallLink } from "@/components/Tracked";
 import { JsonLd } from "@/components/JsonLd";
 import { Check } from "@/components/Icons";
-import { WorkCover } from "@/components/work/WorkCover";
-import { Spotlight } from "@/components/ui/Spotlight";
+import { WorkCard } from "@/components/work/WorkCard";
 import { getService, services } from "@/content/services";
 import { work } from "@/content/work";
 import { absoluteUrl, site } from "@/lib/site";
@@ -61,40 +60,52 @@ export default async function ServicePage({ params }: Props) {
 
       <section className="container-x grid gap-12 lg:grid-cols-12 lg:gap-14">
         <div className="lg:col-span-7">
-          <h2 className="display h3">Who it’s for</h2>
-          <p className="mt-4 max-w-2xl text-[1.0625rem]">{service.forWho}</p>
+          <div data-reveal>
+            <h2 className="display h3">Who it’s for</h2>
+            <p className="mt-5 max-w-2xl text-[1.1rem] lg:text-xl">{service.forWho}</p>
+          </div>
 
-          <h2 className="display h3 mt-14">What’s included</h2>
-          <ul className="mt-6 space-y-3">
-            {service.includes.map((item) => (
-              <li key={item} className="flex gap-3 text-[1.0625rem]">
-                <Check size={18} className="mt-1.5 shrink-0 text-muted" />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <aside className="space-y-3 lg:col-span-5">
-          <div className="rounded-[1.25rem] border border-line-strong bg-surface-2 p-6 sm:p-7">
-            <h2 className="text-lg font-semibold tracking-[-0.02em]">You get</h2>
-            <ul className="mt-3 space-y-1.5">
-              {service.deliverables.map((d) => (
-                <li key={d}>{d}</li>
+          <div data-reveal className="mt-16">
+            <h2 className="display h3">What’s included</h2>
+            <ul className="mt-7 space-y-3">
+              {service.includes.map((item) => (
+                <li
+                  key={item}
+                  className="group flex items-start gap-4 rounded-2xl border border-line bg-surface p-4 text-[1.0625rem] transition-[translate,border-color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:translate-x-2 hover:border-accent sm:p-5"
+                >
+                  <span className="grid size-7 shrink-0 place-items-center rounded-full bg-accent text-night transition-transform duration-500 group-hover:rotate-[360deg]">
+                    <Check size={15} strokeWidth={3} />
+                  </span>
+                  <span>{item}</span>
+                </li>
               ))}
             </ul>
           </div>
-          <div className="rounded-[1.25rem] border border-line bg-surface p-6 sm:p-7">
-            <h2 className="text-lg font-semibold tracking-[-0.02em]">How we measure it</h2>
+        </div>
+
+        <aside className="space-y-5 lg:sticky lg:top-28 lg:col-span-5 lg:self-start">
+          <div data-reveal className="on-bright noise relative isolate overflow-hidden rounded-[1.75rem] border-[1.5px] border-night bg-pop p-6 shadow-[8px_10px_0_0_#12072e] sm:p-8">
+            <h2 className="display text-[2rem] leading-none">You get</h2>
+            <ul className="mt-5 space-y-2.5 font-semibold">
+              {service.deliverables.map((d) => (
+                <li key={d} className="flex items-center gap-3">
+                  <span aria-hidden="true" className="size-2.5 shrink-0 rounded-full bg-night" />
+                  {d}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div data-reveal className="rounded-[1.75rem] border border-line bg-surface p-6 sm:p-8">
+            <h2 className="text-lg font-bold tracking-[-0.02em]">How we measure it</h2>
             <ul className="mt-3 space-y-1.5 text-muted">
               {service.measures.map((m) => (
                 <li key={m}>{m}</li>
               ))}
             </ul>
-            <h2 className="mt-6 text-lg font-semibold tracking-[-0.02em]">Channels</h2>
+            <h2 className="mt-6 text-lg font-bold tracking-[-0.02em]">Channels</h2>
             <ul className="mt-3 flex flex-wrap gap-2">
               {service.channels.map((c) => (
-                <li key={c} className="rounded-full border border-line-strong px-3 py-1 text-sm font-medium text-muted">
+                <li key={c} className="rounded-full border border-line-strong px-3 py-1 text-sm font-semibold text-muted transition-colors hover:border-accent hover:text-ink">
                   {c}
                 </li>
               ))}
@@ -104,32 +115,22 @@ export default async function ServicePage({ params }: Props) {
       </section>
 
       {related.length > 0 && (
-        <section aria-labelledby="related-title" className="container-x mt-20 lg:mt-28">
-          <h2 id="related-title" className="display h3">
+        <section aria-labelledby="related-title" className="container-x mt-24 lg:mt-36">
+          <h2 id="related-title" className="display h2" data-reveal>
             Related work
           </h2>
-          <ul className="mt-8 grid gap-3 md:grid-cols-2">
-            {related.map((w, i) => (
-              <li key={w.slug}>
-                <Spotlight className="group h-full">
-                  <WorkCover palette={w.palette} word={w.coverWord} variant={i + 1} className="block h-56 w-full transition-transform duration-700 group-hover:scale-[1.03]" />
-                  <div className="p-5 sm:p-6">
-                    <p className="display text-[1.4rem] leading-tight tracking-[-0.04em]">
-                      <Link href={`/work/${w.slug}`} className="card-link">
-                        {w.client}
-                      </Link>
-                    </p>
-                    <p className="mt-1 text-[0.95rem] text-muted">{w.title}</p>
-                  </div>
-                </Spotlight>
+          <ul className="mt-10 grid gap-6 md:grid-cols-2">
+            {related.map((w) => (
+              <li key={w.slug} data-reveal>
+                <WorkCard item={w} index={work.indexOf(w)} />
               </li>
             ))}
           </ul>
         </section>
       )}
 
-      <section aria-labelledby="svc-faq" className="container-x mt-20 grid gap-10 lg:mt-28 lg:grid-cols-12">
-        <h2 id="svc-faq" className="display h3 lg:col-span-4">
+      <section aria-labelledby="svc-faq" className="container-x mt-24 grid gap-10 lg:mt-36 lg:grid-cols-12">
+        <h2 id="svc-faq" className="display h2 text-balance lg:col-span-4" data-reveal>
           Questions about {service.name.toLowerCase()}
         </h2>
         <div className="lg:col-span-8">
@@ -137,14 +138,14 @@ export default async function ServicePage({ params }: Props) {
         </div>
       </section>
 
-      <nav aria-labelledby="more-services" className="container-x mt-20 lg:mt-28">
-        <h2 id="more-services" className="text-lg font-semibold tracking-[-0.02em]">
+      <nav aria-labelledby="more-services" className="container-x mt-24 lg:mt-36">
+        <h2 id="more-services" className="display h3">
           More services
         </h2>
-        <ul className="mt-4 flex flex-wrap gap-2">
+        <ul className="mt-6 flex flex-wrap gap-2.5">
           {others.map((s) => (
             <li key={s.slug}>
-              <Link href={`/services/${s.slug}`} className="inline-flex min-h-11 items-center rounded-full border border-line-strong px-4 text-[0.95rem] font-medium text-muted no-underline hover:border-ink hover:text-ink">
+              <Link href={`/services/${s.slug}`} className="btn btn-secondary min-h-11 px-5 text-[0.95rem]">
                 {s.name}
               </Link>
             </li>

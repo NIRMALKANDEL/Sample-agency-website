@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, m } from "framer-motion";
+import { AnimatePresence, m, useScroll, useSpring } from "framer-motion";
 import { nav, site } from "@/lib/site";
 import { Logo } from "./Logo";
 import { ThemeToggle } from "./ThemeToggle";
@@ -17,6 +17,9 @@ export function Header() {
   const menuButton = useRef<HTMLButtonElement>(null);
   const panel = useRef<HTMLDivElement>(null);
   const [lastPath, setLastPath] = useState(pathname);
+  const [hovered, setHovered] = useState<string | null>(null);
+  const { scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, { stiffness: 200, damping: 30, restDelta: 0.001 });
 
   // Close the menu after navigation.
   if (lastPath !== pathname) {
@@ -81,29 +84,50 @@ export function Header() {
           Skip to content
         </a>
         <div
-          className={`pointer-events-auto mx-auto flex h-14 max-w-5xl items-center justify-between gap-2 rounded-full border pl-4 pr-1.5 backdrop-blur-xl transition-[background-color,border-color,box-shadow] duration-300 ${
+          className={`pointer-events-auto relative mx-auto flex h-14 max-w-5xl items-center justify-between gap-2 overflow-hidden rounded-full border pl-4 pr-1.5 backdrop-blur-xl transition-[background-color,border-color,box-shadow] duration-300 ${
             scrolled || open
-              ? "border-line-strong bg-paper/80 shadow-[0_10px_40px_-18px_rgba(0,0,0,0.6)]"
-              : "border-line bg-paper/45"
+              ? "border-line-strong bg-paper/75 shadow-[0_16px_50px_-18px_rgba(18,7,46,0.7)]"
+              : "border-line bg-paper/40"
           }`}
         >
+          {/* Reading progress along the bottom edge of the pill. */}
+          <m.span
+            aria-hidden="true"
+            style={{ scaleX: progress }}
+            className="heat-bg pointer-events-none absolute inset-x-0 bottom-0 h-[3px] origin-left"
+          />
           <Logo />
 
-          <nav aria-label="Main" className="hidden lg:block">
+          <nav aria-label="Main" className="hidden lg:block" onPointerLeave={() => setHovered(null)}>
             <ul className="flex items-center gap-0.5">
-              {nav.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    aria-current={isActive(item.href) ? "page" : undefined}
-                    className={`inline-flex min-h-10 items-center rounded-full px-3.5 text-sm font-medium no-underline transition-colors hover:text-ink ${
-                      isActive(item.href) ? "bg-surface-2 text-ink" : "text-muted hover:bg-surface-2/60"
-                    }`}
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
+              {nav.map((item) => {
+                const active = isActive(item.href);
+                const lit = hovered ? hovered === item.href : active;
+                return (
+                  <li key={item.href} className="relative">
+                    {lit && (
+                      <m.span
+                        layoutId="nav-pill"
+                        aria-hidden="true"
+                        className={`absolute inset-0 rounded-full ${hovered ? "bg-pop" : "bg-surface-2"}`}
+                        transition={{ type: "spring", stiffness: 420, damping: 34 }}
+                      />
+                    )}
+                    <Link
+                      href={item.href}
+                      aria-current={active ? "page" : undefined}
+                      onPointerEnter={() => setHovered(item.href)}
+                      onFocus={() => setHovered(item.href)}
+                      onBlur={() => setHovered(null)}
+                      className={`relative inline-flex min-h-10 items-center rounded-full px-3.5 text-sm font-semibold no-underline transition-colors duration-200 ${
+                        hovered === item.href ? "text-night" : active ? "text-ink" : "text-muted"
+                      }`}
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           </nav>
 
@@ -139,21 +163,26 @@ export function Header() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-0 z-40 overflow-y-auto bg-paper lg:hidden"
+            className="noise isolate fixed inset-0 z-40 overflow-y-auto bg-paper lg:hidden"
           >
+            <div aria-hidden="true" className="aurora">
+              <i />
+              <i />
+              <i />
+            </div>
             <nav aria-label="Mobile" className="container-x flex min-h-full flex-col justify-between gap-10 pb-8 pt-28">
               <ul className="flex flex-col">
                 {nav.map((item, i) => (
                   <m.li
                     key={item.href}
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.03 * i, duration: 0.3 }}
+                    initial={{ opacity: 0, y: 40, rotate: 3 }}
+                    animate={{ opacity: 1, y: 0, rotate: 0 }}
+                    transition={{ delay: 0.05 * i + 0.05, type: "spring", stiffness: 260, damping: 24 }}
                   >
                     <Link
                       href={item.href}
                       aria-current={isActive(item.href) ? "page" : undefined}
-                      className="display flex min-h-16 items-center border-b border-line text-[2.25rem] no-underline aria-[current=page]:text-muted"
+                      className="display flex min-h-16 items-center justify-between border-b border-line text-[2.6rem] no-underline aria-[current=page]:text-accent"
                     >
                       {item.label}
                     </Link>

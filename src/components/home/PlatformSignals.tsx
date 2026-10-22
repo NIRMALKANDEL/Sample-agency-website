@@ -31,7 +31,7 @@ export function PlatformSignals() {
         role="tablist"
         aria-label="Platforms"
         onKeyDown={onKeyDown}
-        className="scroll-row snap-none sm:mx-0 sm:flex-wrap sm:overflow-visible sm:p-0"
+        className="scroll-row isolate snap-none sm:mx-0 sm:flex-wrap sm:overflow-visible sm:p-0"
       >
         {platformSignals.map((p, i) => {
           const selected = i === active;
@@ -48,11 +48,19 @@ export function PlatformSignals() {
               aria-controls={`${baseId}-panel`}
               tabIndex={selected ? 0 : -1}
               onClick={() => setActive(i)}
-              className={`inline-flex min-h-11 shrink-0 items-center rounded-full border px-5 text-[0.95rem] font-medium transition-colors ${
-                selected ? "border-accent bg-accent text-night" : "border-line-strong text-muted hover:border-ink hover:text-ink"
+              className={`relative inline-flex min-h-12 shrink-0 items-center rounded-full border-[1.5px] px-5 text-[0.98rem] font-semibold transition-colors duration-300 ${
+                selected ? "border-night text-night" : "border-line-strong text-muted hover:border-ink hover:text-ink"
               }`}
             >
-              {p.platform}
+              {selected && (
+                <m.span
+                  layoutId="platform-pill"
+                  aria-hidden="true"
+                  className="absolute inset-0 -z-10 rounded-full bg-pop shadow-[0_4px_0_-1px_#12072e]"
+                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                />
+              )}
+              <span className="relative">{p.platform}</span>
             </button>
           );
         })}
@@ -63,7 +71,7 @@ export function PlatformSignals() {
         role="tabpanel"
         aria-labelledby={`${baseId}-tab-${current.id}`}
         tabIndex={0}
-        className="mt-6 rounded-[1.5rem] border border-line bg-surface p-6 sm:p-10"
+        className="noise relative isolate mt-6 overflow-hidden rounded-[2rem] border border-line bg-surface p-6 sm:p-10 lg:p-12"
       >
         <AnimatePresence mode="wait" initial={false}>
           <m.div
@@ -73,13 +81,21 @@ export function PlatformSignals() {
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.22 }}
           >
-            <p className="display text-[clamp(1.75rem,3.6vw,3rem)] tracking-[-0.045em]">{current.headline}</p>
-            <div className="mt-8 grid gap-8 md:grid-cols-3 md:gap-0 md:divide-x md:divide-line">
-              {current.signals.map((s) => (
-                <div key={s.title} className="md:px-8 md:first:pl-0 md:last:pr-0">
-                  <h3 className="text-lg font-semibold tracking-[-0.02em]">{s.title}</h3>
+            <div aria-hidden="true" className="heat-bg pointer-events-none absolute -right-24 -top-24 -z-10 size-72 rounded-full opacity-30 blur-3xl" />
+            <p className="display heat-text max-w-4xl text-[clamp(2.1rem,4.6vw,4rem)]">{current.headline}</p>
+            <div className="mt-10 grid gap-4 md:grid-cols-3">
+              {current.signals.map((s, i) => (
+                <m.div
+                  key={s.title}
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.08 * i + 0.1, type: "spring", stiffness: 220, damping: 24 }}
+                  className="rounded-2xl border border-line bg-paper/60 p-5"
+                >
+                  <span aria-hidden="true" className={`block h-1.5 w-10 rounded-full ${["bg-accent", "bg-pop", "bg-lavender"][i % 3]}`} />
+                  <h3 className="mt-4 text-lg font-bold tracking-[-0.02em]">{s.title}</h3>
                   <p className="mt-2 text-muted">{s.body}</p>
-                </div>
+                </m.div>
               ))}
             </div>
             <p className="mt-8 text-sm text-muted">

@@ -9,7 +9,7 @@ export function Faq({ items }: { items: { q: string; a: string }[] }) {
   const baseId = useId();
 
   return (
-    <div className="divide-y divide-line border-y border-line">
+    <div className="divide-y divide-line-strong border-y border-line-strong">
       {items.map((f, i) => {
         const isOpen = open === i;
         const buttonId = `${baseId}-q-${i}`;
@@ -23,17 +23,17 @@ export function Faq({ items }: { items: { q: string; a: string }[] }) {
                 aria-expanded={isOpen}
                 aria-controls={panelId}
                 onClick={() => setOpen(isOpen ? null : i)}
-                className="group flex min-h-16 w-full items-center justify-between gap-6 py-4 text-left text-[1.0625rem] font-medium tracking-[-0.015em] sm:text-lg"
+                className="group flex min-h-[4.5rem] w-full items-center justify-between gap-6 py-5 text-left text-[1.1rem] font-semibold tracking-[-0.02em] sm:text-xl"
               >
-                <span>{f.q}</span>
-                <span className="acc-icon grid size-9 shrink-0 place-items-center rounded-full border border-line-strong text-muted transition-colors group-hover:border-ink group-hover:text-ink">
+                <span className="transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-2">{f.q}</span>
+                <span className="acc-icon grid size-11 shrink-0 place-items-center rounded-full border-[1.5px] border-line-strong text-ink group-hover:border-accent">
                   <Plus size={16} />
                 </span>
               </button>
             </h3>
             <div id={panelId} role="region" aria-labelledby={buttonId} data-open={isOpen} className="acc-panel" inert={!isOpen}>
               <div className="acc-inner">
-                <p className="max-w-2xl pb-6 text-muted">{f.a}</p>
+                <p className="max-w-2xl pb-7 text-[1.02rem] text-muted">{f.a}</p>
               </div>
             </div>
           </div>

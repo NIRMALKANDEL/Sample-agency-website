@@ -6,10 +6,12 @@ import { CtaBand } from "@/components/CtaBand";
 import { JsonLd } from "@/components/JsonLd";
 import { BookCallLink } from "@/components/Tracked";
 import { WorkCover } from "@/components/work/WorkCover";
+import { ArrowUpRight } from "@/components/Icons";
 import { getCaseStudy, work } from "@/content/work";
 import { services } from "@/content/services";
 import { absoluteUrl, site } from "@/lib/site";
 import { pageMetadata } from "@/lib/seo";
+import { cssVars } from "@/lib/css";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -51,29 +53,29 @@ export default async function CaseStudyPage({ params }: Props) {
         wide
       >
         {cs.concept && (
-          <p className="mt-6 inline-flex rounded-2xl border border-line-strong bg-surface-2 px-4 py-2 text-sm font-medium">
+          <p className="sticker fade-up mt-7 -rotate-1 rounded-2xl bg-pop text-sm" style={cssVars({ "--d": "500ms" })}>
             Concept project: {cs.client} is a fictional brand used to show our approach.
           </p>
         )}
       </PageHero>
 
       <div className="container-x">
-        <div className="overflow-hidden rounded-[1.5rem] border border-line">
+        <div data-reveal="scale" className="overflow-hidden rounded-[2rem] border-[1.5px] border-night shadow-[12px_14px_0_0_#12072e]">
           <WorkCover palette={cs.palette} word={cs.coverWord} variant={index} className="block aspect-[4/3] h-auto w-full sm:aspect-[16/9]" />
         </div>
 
-        <dl className="mt-10 grid gap-6 border-y border-line py-8 sm:grid-cols-3">
-          <div>
+        <dl data-reveal className="mt-14 grid gap-4 sm:grid-cols-3">
+          <div className="rounded-2xl border border-line bg-surface p-5">
             <dt className="text-sm text-muted">Client</dt>
-            <dd className="mt-1 font-medium">{cs.client}</dd>
+            <dd className="display mt-2 text-[1.6rem] leading-none">{cs.client}</dd>
           </div>
-          <div>
+          <div className="rounded-2xl border border-line bg-surface p-5">
             <dt className="text-sm text-muted">Sector</dt>
-            <dd className="mt-1 font-medium">{cs.sector}</dd>
+            <dd className="display mt-2 text-[1.6rem] leading-none">{cs.sector}</dd>
           </div>
-          <div>
+          <div className="rounded-2xl border border-line bg-surface p-5">
             <dt className="text-sm text-muted">Services</dt>
-            <dd className="mt-1 flex flex-wrap gap-x-3 gap-y-1 font-medium">
+            <dd className="mt-2 flex flex-wrap gap-x-3 gap-y-1 font-semibold">
               {cs.services.map((name) => {
                 const s = services.find((x) => x.name === name);
                 return s ? (
@@ -89,26 +91,29 @@ export default async function CaseStudyPage({ params }: Props) {
         </dl>
       </div>
 
-      <article className="container-x mt-16 grid gap-12 lg:grid-cols-12">
+      <article className="container-x mt-20 grid gap-12 lg:grid-cols-12">
         <div className="space-y-14 lg:col-span-8">
-          <section>
-            <h2 className="display h3">Context</h2>
-            <p className="mt-4 max-w-2xl text-[1.0625rem]">{cs.context}</p>
+          <section data-reveal>
+            <h2 className="display h2">Context</h2>
+            <p className="mt-5 max-w-2xl text-[1.1rem] lg:text-xl">{cs.context}</p>
           </section>
-          <section>
-            <h2 className="display h3">The challenge</h2>
-            <p className="mt-4 max-w-2xl text-[1.0625rem]">{cs.challenge}</p>
+          <section data-reveal>
+            <h2 className="display h2">The challenge</h2>
+            <p className="mt-5 max-w-2xl text-[1.1rem] lg:text-xl">{cs.challenge}</p>
           </section>
-          <section>
-            <h2 className="display h3">Approach</h2>
-            <ol className="mt-6 space-y-8">
+          <section data-reveal>
+            <h2 className="display h2">Approach</h2>
+            <ol className="mt-8 space-y-9">
               {cs.approach.map((step, i) => (
-                <li key={step.title} className="grid grid-cols-[2.5rem_1fr] gap-4">
-                  <span className="grid size-9 place-items-center rounded-full border border-line-strong text-sm font-medium tabular-nums" aria-hidden="true">
+                <li key={step.title} className="grid grid-cols-[3rem_1fr] gap-4 sm:gap-5">
+                  <span
+                    className="display grid size-12 place-items-center rounded-full border-[1.5px] border-night bg-accent text-xl text-night shadow-[0_4px_0_-1px_#12072e]"
+                    aria-hidden="true"
+                  >
                     {i + 1}
                   </span>
-                  <div>
-                    <h3 className="text-xl font-semibold tracking-[-0.03em]">{step.title}</h3>
+                  <div className="pt-1">
+                    <h3 className="display text-[1.8rem] leading-none">{step.title}</h3>
                     <p className="mt-2 max-w-2xl text-muted">{step.body}</p>
                   </div>
                 </li>
@@ -116,8 +121,8 @@ export default async function CaseStudyPage({ params }: Props) {
             </ol>
           </section>
           {cs.results && cs.results.length > 0 && (
-            <section>
-              <h2 className="display h3">Results</h2>
+            <section data-reveal>
+              <h2 className="display h2">Results</h2>
               <dl className="mt-6 grid gap-6 sm:grid-cols-3">
                 {cs.results.map((r) => (
                   <div key={r.label} className="rounded-[1.25rem] bg-accent p-6 text-night">
@@ -130,14 +135,14 @@ export default async function CaseStudyPage({ params }: Props) {
           )}
         </div>
         <aside className="space-y-6 lg:col-span-4">
-          <div className="rounded-[1.25rem] border border-line bg-surface p-6 sm:p-7 lg:sticky lg:top-24">
-            <h2 className="text-lg font-semibold tracking-[-0.02em]">Deliverables</h2>
+          <div className="glass rounded-[1.75rem] p-6 sm:p-8 lg:sticky lg:top-28">
+            <h2 className="text-lg font-bold tracking-[-0.02em]">Deliverables</h2>
             <ul className="mt-3 space-y-1.5 text-muted">
               {cs.deliverables.map((d) => (
                 <li key={d}>{d}</li>
               ))}
             </ul>
-            <h2 className="mt-6 text-lg font-semibold tracking-[-0.02em]">How success is measured</h2>
+            <h2 className="mt-6 text-lg font-bold tracking-[-0.02em]">How success is measured</h2>
             <ul className="mt-3 space-y-1.5 text-muted">
               {cs.measures.map((m) => (
                 <li key={m}>{m}</li>
@@ -150,11 +155,17 @@ export default async function CaseStudyPage({ params }: Props) {
         </aside>
       </article>
 
-      <nav aria-label="Next project" className="container-x mt-20 lg:mt-28">
-        <Link href={`/work/${next.slug}`} className="group flex flex-col gap-2 border-y border-line-strong py-8 no-underline sm:flex-row sm:items-end sm:justify-between">
-          <span className="text-muted">Next project</span>
-          <span className="display text-[clamp(2rem,5vw,4rem)] leading-none text-ink transition-colors duration-300 group-hover:text-muted">
+      <nav aria-label="Next project" className="container-x mt-28 lg:mt-40">
+        <Link
+          href={`/work/${next.slug}`}
+          className="svc-row group flex flex-col gap-3 overflow-hidden rounded-[2rem] border-[1.5px] border-line-strong px-6 py-10 no-underline sm:flex-row sm:items-end sm:justify-between sm:px-10 sm:py-14"
+        >
+          <span className="font-semibold text-muted">Next project</span>
+          <span className="display flex items-center gap-4 text-[clamp(2.6rem,8vw,7rem)] leading-[0.9] text-ink transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-x-3">
             {next.client}
+            <span aria-hidden="true" className="grid size-14 shrink-0 place-items-center rounded-full bg-night text-pop transition-transform duration-500 group-hover:rotate-45 sm:size-20">
+              <ArrowUpRight size={30} />
+            </span>
           </span>
         </Link>
       </nav>

@@ -24,17 +24,28 @@ export default function ServicesPage() {
         <ServicesIndex headingLevel="h2" />
       </section>
 
-      <section aria-labelledby="engage-title" className="container-x mt-24 lg:mt-32">
+      <section aria-labelledby="engage-title" className="container-x mt-28 lg:mt-40">
         <SectionHeading id="engage-title" title="Ways to work together." />
-        <div className="mt-12">
+        <div className="mt-14">
           <Engagements />
         </div>
       </section>
 
-      <section aria-labelledby="process-title" className="container-x mt-24 lg:mt-32">
-        <SectionHeading id="process-title" title="How a project runs." />
-        <div className="mt-10">
-          <Process />
+      <section aria-labelledby="process-title" className="theme-uv noise relative isolate mt-28 overflow-hidden py-24 lg:mt-40 lg:py-32">
+        <div aria-hidden="true" className="aurora">
+          <i />
+          <i />
+          <i />
+        </div>
+        <div className="container-x grid gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-5">
+            <div className="lg:sticky lg:top-32">
+              <SectionHeading id="process-title" title="How a project runs." intro="The same four steps whichever services you choose." />
+            </div>
+          </div>
+          <div className="lg:col-span-7">
+            <Process />
+          </div>
         </div>
       </section>
 

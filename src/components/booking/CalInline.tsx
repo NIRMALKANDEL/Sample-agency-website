@@ -51,8 +51,8 @@ export default function CalInline({ prefill, location }: { prefill?: CalPrefill;
         hideEventTypeDetails: false,
         layout: "month_view",
         cssVarsPerTheme: {
-          light: { "cal-brand": "#130F26" },
-          dark: { "cal-brand": "#D4FF3A" },
+          light: { "cal-brand": "#FF4F2B" },
+          dark: { "cal-brand": "#FF4F2B" },
         },
       });
     })();

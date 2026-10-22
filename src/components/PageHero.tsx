@@ -2,6 +2,8 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { JsonLd } from "./JsonLd";
 import { breadcrumbJsonLd } from "@/lib/seo";
+import { SplitWords } from "./ui/SplitWords";
+import { cssVars } from "@/lib/css";
 
 type Crumb = { name: string; path: string };
 
@@ -21,11 +23,16 @@ export function PageHero({
 }) {
   const all = [{ name: "Home", path: "/" }, ...crumbs];
   return (
-    <section className="relative isolate">
-      <div aria-hidden="true" className="bg-grid pointer-events-none absolute inset-x-0 top-0 -z-10 h-[26rem]" />
-      <div aria-hidden="true" className="glow-lavender pointer-events-none absolute inset-x-0 top-0 -z-10 h-[30rem] opacity-70" />
-      <div className="container-x pb-12 pt-28 sm:pt-32 lg:pb-16 lg:pt-36">
-      <nav aria-label="Breadcrumb">
+    <section className="noise relative isolate overflow-x-clip">
+      <div aria-hidden="true" className="aurora">
+        <i />
+        <i />
+        <i />
+      </div>
+      <div aria-hidden="true" className="bg-grid pointer-events-none absolute inset-x-0 top-0 -z-10 h-[30rem]" />
+      <div aria-hidden="true" className="blob heat-bg pointer-events-none absolute -right-24 top-20 -z-10 size-64 opacity-80 sm:-right-16 sm:size-80 lg:right-[6%] lg:top-28 lg:size-[22rem]" />
+      <div className="container-x pb-14 pt-28 sm:pt-36 lg:pb-20 lg:pt-44">
+      <nav aria-label="Breadcrumb" className="fade-up">
         <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted">
           {all.map((c, i) => (
             <li key={c.path} className="flex items-center gap-2">
@@ -44,11 +51,15 @@ export function PageHero({
         </ol>
       </nav>
       <h1
-        className={`display h1 mt-6 text-[clamp(2.4rem,6.4vw,5.25rem)] ${wide ? "max-w-6xl" : "max-w-4xl"} text-balance`}
+        className={`display h1 mt-6 text-[clamp(2.6rem,7.4vw,6.6rem)] ${wide ? "max-w-6xl" : "max-w-5xl"} text-balance`}
       >
-        {title}
+        <SplitWords text={title} />
       </h1>
-      {intro && <p className="lede mt-6">{intro}</p>}
+      {intro && (
+        <p className="lede fade-up mt-7 text-ink/80" style={cssVars({ "--d": "350ms" })}>
+          {intro}
+        </p>
+      )}
       {children}
       <JsonLd data={breadcrumbJsonLd(all)} />
       </div>
